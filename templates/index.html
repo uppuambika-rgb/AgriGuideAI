@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AgriGuide AI, a calm and practical crop-care companion." />
+  <title>AgriGuide AI | Crop care companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div>
+          <p class="brand-name">AgriGuide <span>AI</span></p>
+          <p class="brand-caption">Field notes, made clear</p>
+        </div>
+        <button class="icon-button close-sidebar" id="closeSidebar" aria-label="Close menu">&times;</button>
+      </div>
+
+      <button class="new-chat-button" id="newChatButton"><span class="plus-icon">+</span> New conversation</button>
+
+      <nav class="chat-history" id="chatHistory" aria-label="Conversation history">
+        <p class="nav-label">Recent conversations</p>
+        <button class="history-item active"><span class="history-dot"></span><span>Crop leaf spots</span><span class="more">...</span></button>
+        <button class="history-item"><span class="history-dot muted"></span><span>Preparing soil for millet</span></button>
+        <button class="history-item"><span class="history-dot muted"></span><span>Natural pest control</span></button>
+        <button class="history-item"><span class="history-dot muted"></span><span>Rainy season planning</span></button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-line"><span class="status-indicator"></span> Advice is informational</div>
+        <button class="profile-button" id="profileButton"><span class="avatar">SK</span><span class="profile-copy"><strong id="profileName">Samir Kumar</strong><small id="profileEmail">Grower account</small></span><span class="chevron">⌄</span></button>
+        <button class="sign-out-button" id="signOutButton" type="button">Sign out</button>
+      </div>
+    </aside>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <button class="icon-button menu-button" id="menuButton" aria-label="Open menu">&#9776;</button>
+        <div class="breadcrumb"><span>Workspace</span><span>/</span><strong>New conversation</strong></div>
+        <div class="topbar-actions">
+          <label class="language-picker" aria-label="Choose language">
+            <span class="globe">◎</span>
+            <select id="languageSelect">
+              <option value="en">English</option>
+              <option value="hi">हिन्दी</option>
+              <option value="te">తెలుగు</option>
+              <option value="ta">தமிழ்</option>
+              <option value="kn">ಕನ್ನಡ</option>
+            </select>
+          </label>
+          <button class="icon-button" aria-label="More options">...</button>
+        </div>
+      </header>
+
+      <section class="conversation" aria-label="AgriGuide conversation">
+        <div class="conversation-inner">
+          <div class="welcome-block" id="welcomeBlock">
+            <div class="welcome-kicker"><span class="sun-icon">✦</span> Your field companion</div>
+            <h1>Good morning, Samir.</h1>
+            <p>What are we growing through today?</p>
+          </div>
+
+          <section class="field-pulse" aria-label="Field pulse">
+            <div class="pulse-heading"><span>Field pulse</span><div class="location-control"><span id="locationLabel">Location not set</span><button type="button" id="setLocationButton">Set location</button></div></div>
+            <form class="location-form" id="locationForm" hidden><label class="sr-only" for="locationInput">Your location</label><input id="locationInput" type="text" placeholder="City, district, or village" autocomplete="address-level2" /><button type="submit" id="saveLocationButton">Use location</button></form>
+            <div class="pulse-grid">
+              <div class="pulse-item"><span class="pulse-icon weather-icon">☼</span><div><small>Current weather</small><strong id="weatherCondition">Waiting for location</strong></div><b id="weatherTemperature">--</b></div>
+              <div class="pulse-item"><span class="pulse-icon soil-icon">⌁</span><div><small>Humidity</small><strong id="weatherHumidityLabel">Waiting for weather</strong></div><b class="good" id="weatherHumidity">--</b></div>
+              <div class="pulse-item"><span class="pulse-icon crop-icon">✳</span><div><small>Next on your list</small><strong>Check crop leaves</strong></div><b class="arrow">↗</b></div>
+            </div>
+          </section>
+
+          <section class="idea-garden" id="ideaGarden" aria-label="Idea garden">
+            <div class="garden-heading">
+              <div><span class="garden-sprout">✦</span><span>Idea garden</span><small>Small questions can grow into better harvests.</small></div>
+              <button class="shuffle-ideas" id="shuffleIdeas" type="button" aria-label="Show different ideas">Shuffle <span>↻</span></button>
+            </div>
+            <div class="idea-row" id="ideaRow"></div>
+          </section>
+
+          <div class="messages" id="messages" aria-live="polite">
+            <article class="message assistant-message intro-message">
+              <div class="message-avatar assistant-avatar">AG</div>
+              <div class="message-content">
+                <div class="message-meta"><strong>AgriGuide</strong><time>Just now</time></div>
+                <div class="message-bubble"><p>I’m here to help you make sense of what’s happening in your field. Ask me about crops, soil, pests, or planning.</p></div>
+              </div>
+            </article>
+          </div>
+
+          <div class="suggestions" id="suggestions">
+            <p class="suggestions-label">Try asking</p>
+            <div class="suggestion-grid">
+              <button class="suggestion-chip" data-prompt="What should I plant this month?"><span class="chip-icon green">↗</span> What should I plant this month?</button>
+              <button class="suggestion-chip" data-prompt="How can I improve my soil health?"><span class="chip-icon brown">⌁</span> How can I improve my soil health?</button>
+              <button class="suggestion-chip" data-prompt="Help me identify a pest on my crop"><span class="chip-icon orange">⌁</span> Help me identify a pest</button>
+              <button class="suggestion-chip" data-prompt="How much water do my crops need?"><span class="chip-icon blue">◌</span> How much should I water?</button>
+            </div>
+          </div>
+
+          <form class="composer" id="chatForm">
+            <label class="sr-only" for="messageInput">Message AgriGuide</label>
+            <textarea id="messageInput" rows="1" placeholder="Ask anything about your field..." autocomplete="off"></textarea>
+            <div class="photo-preview" id="photoPreview" hidden></div>
+            <div class="composer-tools">
+              <div class="composer-hint">Add a photo for plant diagnosis (optional)</div>
+              <div class="composer-actions">
+                <input class="sr-only" id="cameraInput" type="file" accept="image/*" capture="environment" />
+                <input class="sr-only" id="uploadInput" type="file" accept="image/jpeg,image/png,image/webp" />
+                <button type="button" class="round-tool upload-button" id="uploadButton" aria-label="Upload crop photo" title="Upload crop photo">⌑</button>
+                <button type="button" class="round-tool camera-button" id="cameraButton" aria-label="Open camera">⌾</button>
+                <button type="button" class="round-tool microphone-button" id="microphoneButton" aria-label="Start voice input">♩</button>
+                <button class="send-button" type="submit" aria-label="Send message">&#8593;</button>
+              </div>
+            </div>
+          </form>
+          <p class="disclaimer">AgriGuide can make mistakes. Check important decisions with a local agriculture expert.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="auth-backdrop" id="authBackdrop" hidden>
+    <section class="auth-card" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <div class="auth-mark">AG</div>
+      <p class="auth-kicker">Your field companion</p>
+      <h2 id="authTitle">Welcome to AgriGuide</h2>
+      <p class="auth-copy">Sign in to keep your questions and field notes together.</p>
+      <div class="auth-mode" role="tablist" aria-label="Account access">
+        <button class="auth-mode-button active" id="signInMode" type="button" role="tab" aria-selected="true">Sign in</button>
+        <button class="auth-mode-button" id="createAccountMode" type="button" role="tab" aria-selected="false">Create account</button>
+      </div>
+      <form id="authForm">
+        <label for="phoneInput" id="phoneLabel" hidden>Phone number</label>
+        <input id="phoneInput" type="tel" placeholder="e.g. +91 98765 43210" autocomplete="tel" minlength="7" hidden />
+        <label for="usernameInput">Username</label>
+        <input id="usernameInput" type="text" placeholder="e.g. samir_kumar" autocomplete="username" minlength="3" required />
+        <label for="passwordInput">Password</label>
+        <input id="passwordInput" type="password" placeholder="Enter a password" autocomplete="current-password" minlength="4" required />
+        <p class="auth-error" id="authError" role="alert" hidden></p>
+        <button class="auth-submit" id="authSubmit" type="submit">Sign in <span>&rarr;</span></button>
+      </form>
+      <button class="auth-link" id="forgotPasswordButton" type="button">Forgot password?</button>
+      <form class="forgot-form" id="forgotForm" hidden>
+        <label for="forgotPhoneInput">Registered phone number</label>
+        <input id="forgotPhoneInput" type="tel" placeholder="e.g. +91 98765 43210" autocomplete="tel" minlength="7" required />
+        <button class="auth-submit" id="sendOtpButton" type="submit">Send OTP <span>&rarr;</span></button>
+        <div class="otp-step" id="otpStep" hidden>
+          <label for="otpInput">Enter the 6-digit OTP</label>
+          <input id="otpInput" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000" />
+          <p class="otp-demo" id="otpDemo" hidden></p>
+          <button class="auth-submit" id="verifyOtpButton" type="button">Verify OTP <span>&rarr;</span></button>
+        </div>
+        <button class="auth-link back-to-signin" id="backToSignin" type="button">Back to sign in</button>
+      </form>
+      <p class="auth-note">Frontend demo only. Connect SMS verification and secure authentication before production.</p>
+    </section>
+  </div>
+  <div class="camera-backdrop" id="cameraBackdrop" hidden>
+    <section class="camera-card" role="dialog" aria-modal="true" aria-labelledby="cameraTitle">
+      <div class="camera-card-heading"><div><span class="camera-kicker">Visual check</span><h2 id="cameraTitle">Capture your crop</h2></div><button type="button" class="camera-close" id="closeCamera" aria-label="Close camera">&times;</button></div>
+      <video id="cameraVideo" autoplay playsinline muted></video>
+      <p class="camera-help">Frame the leaf, plant, or soil in good light.</p>
+      <div class="camera-actions"><button class="camera-cancel" id="cancelCamera" type="button">Cancel</button><button class="camera-capture" id="captureCamera" type="button">Capture photo <span>&bull;</span></button></div>
+    </section>
+  </div>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  <script src="script.js"></script>
+</body>
+</html>
